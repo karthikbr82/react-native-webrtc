@@ -18,7 +18,19 @@ import {
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { mediaDevices, RTCView } from 'react-native-webrtc';
-
+require('react-native-callstats/csio-polyfill');
+import callstats from 'react-native-callstats/callstats';
+ 
+var appID = "619077833";
+var appSecret = "i8KFFRf0QoVj:HiFdChCpzodhs5OvrfZicqA31TgGlYMAcucmRZ4j/jA=";
+ 
+var callStats = new callstats();
+ 
+function cscallback(msg, status) {
+ console.log('cscallback ',msg, status);
+}
+ 
+callStats.initialize(appID, appSecret, 'localUserID', cscallback, null, {collectLegacyStats: false});
 const App: () => React$Node = () => {
   const [stream, setStream] = useState(null);
   const start = async () => {
